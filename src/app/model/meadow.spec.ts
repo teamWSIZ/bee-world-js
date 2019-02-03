@@ -14,8 +14,8 @@ describe('AppComponent', () => {
 
   it('should add bee to meadow', () => {
     let b = new Bee(50, 2);
-    testee.add_bee(b);
-    expect(testee.get_bees).toContain(b);
+    testee.addBee(b);
+    expect(testee.getBees).toContain(b);
   });
 
 });

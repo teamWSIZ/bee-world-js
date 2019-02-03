@@ -13,9 +13,12 @@ export class WanderingBee extends Bee {
     return places[idx];
   }
 
-  move(place: Place): Place {
-    let places = place.get_nearby_place();
-    return this.selectRandom(places);
+  preferredMove(place: Place): Place {
+    let places = place.getNearbyPlaces();
+    let next = this.selectRandom(places);
+    console.log('Selected:' + next.getName());
+    this.setCanMove(false);
+    return next;
   }
 
 }

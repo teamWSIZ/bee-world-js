@@ -6,21 +6,19 @@ import {Moveable} from "./moveable";
  */
 
 export class Bee implements Moveable {
-  strength: number;
-  capacity: number;
-  food: number;
-  isMoveable: boolean = true;
+  private capacity: number;
+  private food: number;
+  private isMoveable: boolean = true;
 
   constructor(capacity: number, food: number) {
     this.capacity = capacity;
-    this.strength = 100 - capacity;
     this.food = food;
   }
 
   communicate(other: Bee): void {
   }
 
-  move(place: Place): Place {
+  preferredMove(place: Place): Place {
     return place;
   }
 
