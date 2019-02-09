@@ -2,14 +2,15 @@ import {Bee} from "../bees/bee";
 import {Place} from "./place";
 
 export class Meadow implements Place {
-
   bees: Bee[] = [];
   nearby: Place[] = [];
   name: string;
+  food: number;
 
 
-  constructor(name: string) {
+  constructor(name: string, availableFood : number) {
     this.name = name;
+    this.food = availableFood;
   }
 
   getName() {
@@ -38,6 +39,21 @@ export class Meadow implements Place {
       this.bees.splice(idx,1);
     }
   }
+
+
+  getAvilableFood(): number {
+    return this.food;
+  }
+
+  beeCollectsFood(amount: number): number {
+    let x = Math.min(this.food, amount);
+    this.food -= x;
+    return x;
+  }
+
+
+
+
 
   moveBees() {
     let toremove = [];

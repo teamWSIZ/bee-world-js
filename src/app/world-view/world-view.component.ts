@@ -25,6 +25,6 @@ export class WorldViewComponent implements OnInit {
   }
 
   initializeGame() {
-    this.world.initSimulation(WorldUtils.exampleWorld());
+    this.world.initSimulation(WorldUtils.northernBiala());
   }
 }

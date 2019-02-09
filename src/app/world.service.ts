@@ -9,6 +9,9 @@ import {Bee} from "./model/bees/bee";
 })
 export class WorldService {
   public places : Place[];
+  private BEE_EATS_PER_TURN = 3;
+  private BEE_COLLECTS_PER_TURN = 30;
+
 
   constructor() { }
 
@@ -24,9 +27,10 @@ export class WorldService {
   }
 
   public runTurn() {
+    this.beesGather();
+    this.beesEat();
     this.unfreezeBeeMovement();
     this.beesMove();
-    this.beesFeed();
     this.printWorld()
   }
 
@@ -50,15 +54,24 @@ export class WorldService {
   }
 
   //eat, die, gather food
-  private beesFeed() {
+  private beesEat() {
     this.places.forEach(p => {
       let starved = new Set<Bee>();
       p.getBees().forEach(b => {
-        b.food -= 3;
+        b.food -= this.BEE_EATS_PER_TURN;
         if (b.food<0) starved.add(b);
       });
       //remove all starved bees
       starved.forEach(b => p.removeBee(b));
+    })
+  }
+
+  private beesGather() {
+    this.places.forEach(p => {
+      p.getBees().forEach(b => {
+        let collected = p.beeCollectsFood(this.BEE_COLLECTS_PER_TURN);
+        b.food += collected;
+      });
     })
   }
 

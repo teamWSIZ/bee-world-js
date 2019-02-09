@@ -14,5 +14,9 @@ export interface Place {
   moveBees();
 
 
+  getAvilableFood() : number;
+
+  beeCollectsFood(amount : number) : number;
+
 
 }
