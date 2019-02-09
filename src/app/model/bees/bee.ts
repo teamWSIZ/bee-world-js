@@ -38,4 +38,8 @@ export class Bee implements Moveable {
     return this._food;
   }
 
+
+  set food(value: number) {
+    this._food = value;
+  }
 }

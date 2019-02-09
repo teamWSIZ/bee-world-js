@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Place} from "./model/places/place";
 import {Meadow} from "./model/places/meadow";
 import {WanderingBee} from "./model/bees/wandering-bee";
+import {Bee} from "./model/bees/bee";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class WorldService {
   public runTurn() {
     this.unfreezeBeeMovement();
     this.beesMove();
+    this.beesFeed();
     this.printWorld()
   }
 
@@ -45,6 +47,19 @@ export class WorldService {
       console.log('Place (' + p.getName() + ')');
       p.getBees().forEach(b => console.log(JSON.stringify(b)));
     });
+  }
+
+  //eat, die, gather food
+  private beesFeed() {
+    this.places.forEach(p => {
+      let starved = new Set<Bee>();
+      p.getBees().forEach(b => {
+        b.food -= 3;
+        if (b.food<0) starved.add(b);
+      });
+      //remove all starved bees
+      starved.forEach(b => p.removeBee(b));
+    })
   }
 
 }
