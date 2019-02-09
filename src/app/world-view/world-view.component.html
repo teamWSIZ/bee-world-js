@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-6" >
-      <div class="card" style="background-color: rgba(255,255,255,0.6)">
+    <div class="col-sm-5" >
+      <div class="card trx">
         <div class="card-header">
           World
         </div>
@@ -9,6 +9,12 @@
           <button class="btn btn-success" (click)="runSimulation()">Run simulation</button>
         </div>
       </div>
+    </div>
+    <div class="col-sm-3">
+
+    </div>
+    <div class="col-sm-3">
+      <app-place-view [place]="theplace"></app-place-view>
     </div>
   </div>
 </div>

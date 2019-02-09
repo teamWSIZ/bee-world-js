@@ -7,12 +7,14 @@ import {Moveable} from "./moveable";
 
 export class Bee implements Moveable {
   private capacity: number;
-  private food: number;
+  private _food: number;
   private isMoveable: boolean = true;
+  id: string;
 
   constructor(capacity: number, food: number) {
     this.capacity = capacity;
-    this.food = food;
+    this._food = food;
+    this.id = 'Bzzz';
   }
 
   communicate(other: Bee): void {
@@ -28,6 +30,10 @@ export class Bee implements Moveable {
 
   setCanMove(canMove: boolean): void {
     this.isMoveable = canMove;
+  }
+
+  get food(): number {
+    return this._food;
   }
 
 }
