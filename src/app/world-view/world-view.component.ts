@@ -3,6 +3,7 @@ import {WorldService} from "../world.service";
 import {Place} from "../model/places/place";
 import {Meadow} from "../model/places/meadow";
 import {WanderingBee} from "../model/bees/wandering-bee";
+import {WorldUtils} from "../model/utils/world-utils";
 
 @Component({
   selector: 'app-world-view',
@@ -16,13 +17,22 @@ export class WorldViewComponent implements OnInit {
 
   ngOnInit() {
     this.theplace = new Meadow("Hałcnów");
-    let bee = new WanderingBee(30, 70);
-    this.theplace.addBee(bee);
+    for(let i=0; i<3; i++) {
+      let bee = new WanderingBee(30, 70);
+      this.theplace.addBee(bee);
+    }
   }
 
   runSimulation() {
-    this.world.initSimulation(WorldService.exampleWorld());
-    this.world.runSimulation(2);
+    this.world.initSimulation(WorldUtils.exampleWorld());
+    this.world.runManyTurns(2);
   }
 
+  runTurn() {
+    this.world.runTurn();
+  }
+
+  initializeGame() {
+    this.world.initSimulation(WorldUtils.exampleWorld());
+  }
 }

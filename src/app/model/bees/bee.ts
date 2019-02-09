@@ -1,5 +1,7 @@
 import {Place} from "../places/place";
 import {Moveable} from "./moveable";
+import { v4 as uuid } from 'uuid';
+
 
 /**
  * Pszczoła nie przemieszczająca się wogóle
@@ -14,7 +16,7 @@ export class Bee implements Moveable {
   constructor(capacity: number, food: number) {
     this.capacity = capacity;
     this._food = food;
-    this.id = 'Bzzz';
+    this.id = uuid().substr(0,8);
   }
 
   communicate(other: Bee): void {

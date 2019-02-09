@@ -6,7 +6,12 @@
           World
         </div>
         <div class="card-body">
-          <button class="btn btn-success" (click)="runSimulation()">Run simulation</button>
+          <p> Stats: </p>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-outline-success mr-1" (click)="initializeGame()">Init</button>
+          <button class="btn btn-success mr-1" (click)="runTurn()">Run turn</button>
+          <button class="btn btn-success mr-1" (click)="runSimulation()">Run 5 turns</button>
         </div>
       </div>
     </div>
@@ -14,7 +19,9 @@
 
     </div>
     <div class="col-sm-3">
-      <app-place-view [place]="theplace"></app-place-view>
+      <p *ngFor="let p of world.places">
+        <app-place-view [place]="p"></app-place-view>
+      </p>
     </div>
   </div>
 </div>

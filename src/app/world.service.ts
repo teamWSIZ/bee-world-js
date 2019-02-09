@@ -7,37 +7,28 @@ import {WanderingBee} from "./model/bees/wandering-bee";
   providedIn: 'root'
 })
 export class WorldService {
-  places : Place[];
+  public places : Place[];
 
   constructor() { }
-
-  static exampleWorld(): Place[] {
-    let m1 = new Meadow("m1");
-    let m2 = new Meadow("m2");
-    m1.addNearbyPlace(m2);
-    m2.addNearbyPlace(m1);
-    let b1 = new WanderingBee(80, 10);
-    m1.addBee(b1);
-    return [m1, m2];
-  }
 
   //inicjalizuje warunki symulacji (miejsca i pszczoły)
   initSimulation(places : Place[]) {
     this.places = places;
   }
 
-  runSimulation(maxTurn : number) {
+  public runManyTurns(maxTurn : number) {
     for (let i = 0; i < maxTurn; i++) {
-      console.log('Starting turn ' + i);
-      this.runTurnSequence();
+      this.runTurn();
     }
   }
 
-  runTurnSequence() {
+  public runTurn() {
     this.unfreezeBeeMovement();
     this.beesMove();
     this.printWorld()
   }
+
+  //helpers
 
   private unfreezeBeeMovement() {
     this.places.forEach(p => {
