@@ -1,9 +1,14 @@
 import {Bee} from "../bees/bee";
 import {Place} from "./place";
+import {v4 as uuid} from "uuid";
+import {VisiblePlace} from "./visible-place";
 
 export class Meadow implements Place {
-  bees: Bee[] = [];
-  nearby: Place[] = [];
+  private id : string;
+  bees = new Set<Bee>();  //Set zamiast [] aby można było szybko szukać/usuwać
+  nearby = new Set<Place>();
+  id2place = new Map<string, Place>();
+
   name: string;
   food: number;
 
@@ -11,35 +16,37 @@ export class Meadow implements Place {
   constructor(name: string, availableFood : number) {
     this.name = name;
     this.food = availableFood;
+    this.id = uuid();
   }
 
   getName() {
     return this.name;
   }
 
+  getId(): string {
+    return this.id;
+  }
+
   addBee(b: Bee) {
-    this.bees.push(b);
+    this.bees.add(b);
   }
 
   addNearbyPlace(place: Place) {
-    this.nearby.push(place);
+    this.nearby.add(place);
+    this.id2place.set(place.getId(), place);
   }
 
-  getBees(): Bee[] {
+  getBees(): Set<Bee> {
     return this.bees;
   }
 
-  getNearbyPlaces(): Place[] {
+  getNearbyPlaces(): Set<Place> {
     return this.nearby;
   }
 
   removeBee(b: Bee) {
-    const idx = this.bees.indexOf(b);
-    if (idx != undefined) {
-      this.bees.splice(idx,1);
-    }
+    this.bees.delete(b);
   }
-
 
   getAvilableFood(): number {
     return this.food;
@@ -51,22 +58,21 @@ export class Meadow implements Place {
     return x;
   }
 
-
-
-
-
   moveBees() {
     let toremove = [];
     const current = this;
     this.bees.forEach(bee => {
       if (!bee.isCanMove()) return;
-      let next = bee.preferredMove(current);
-      if (next === current) return;
+      let nextId = bee.preferredMove(new VisiblePlace(current)); //restrict visibility (VisiblePlace); let bee decide
+      if (nextId === current.getId()) return;
+      let next = this.id2place.get(nextId);   //todo: this code should be tested!!!
       toremove.push(bee);
       next.addBee(bee);
     });
     toremove.forEach(b => this.removeBee(b));
   }
+
+
 
 
 
