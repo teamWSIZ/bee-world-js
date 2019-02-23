@@ -18,9 +18,17 @@
       </thead>
       <tbody>
 
-      <tr *ngFor="let bee of place.getBees()">
+      <tr *ngFor="let bee of place.getBees()" class="align-items-center">
         <td>{{bee.id}}</td>
-        <td>{{bee.food}}</td>
+        <td>
+
+          <div class="progress align-content-center">
+            <div class="progress-bar bg-warning" [ngStyle]="{'width': + bee.food + '%'}"> </div>
+          </div>
+
+<!--          {{bee.food}}-->
+
+        </td>
       </tr>
 
       </tbody>
