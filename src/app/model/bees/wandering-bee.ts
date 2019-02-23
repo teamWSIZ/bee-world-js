@@ -1,5 +1,6 @@
 import {Place} from "../places/place";
 import {Bee} from "./bee";
+import {VisiblePlace} from "../places/visible-place";
 
 /**
  * Pszczoła nie przemieszczająca się wogóle
@@ -7,18 +8,22 @@ import {Bee} from "./bee";
 
 export class WanderingBee extends Bee {
 
-  private selectRandom(places : Place[]) {
-    let n = places.length;
+  private static selectRandom(places: string[]): string {
+    let pl = Array.from(places);
+    let n = pl.length;
     let idx = Math.floor(n * Math.random());
-    return places[idx];
+    return pl[idx];
   }
 
-  preferredMove(place: Place): Place {
-    let places = place.getNearbyPlaces();
-    let next = this.selectRandom(places);
-    console.log('Selected:' + next.getName());
-    this.setCanMove(false);
-    return next;
+  preferredMove(place: VisiblePlace): string {
+    let places = place.getNearbyPlaceIds();
+    let next = WanderingBee.selectRandom(places);
+    let idx = places.indexOf(next);
+    if (idx>=0) {
+      return places[idx];
+    } else {
+      return place.getId();
+    }
   }
 
 }
